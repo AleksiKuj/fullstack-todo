@@ -4,6 +4,7 @@ import TodosList from "./components/TodosList"
 import LoginForm from "./components/LoginForm"
 import Notification from "./components/Notification"
 import Togglable from "./components/Togglable"
+import Timer from "./components/Timer"
 import { useState, useEffect } from "react"
 
 function App() {
@@ -63,6 +64,7 @@ function App() {
           setMessageType={setMessageType}
         />
       </Togglable>
+      <Timer />
       <button onClick={() => logOut()}>Log out</button>
     </div>
   )
