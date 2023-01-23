@@ -3,6 +3,7 @@ import TodoForm from "./components/TodoForm"
 import TodosList from "./components/TodosList"
 import LoginForm from "./components/LoginForm"
 import Notification from "./components/Notification"
+import Togglable from "./components/Togglable"
 import { useState, useEffect } from "react"
 
 function App() {
@@ -54,12 +55,14 @@ function App() {
         setMessage={setMessage}
         setMessageType={setMessageType}
       />
-      <TodoForm
-        todos={todos}
-        setTodos={setTodos}
-        setMessage={setMessage}
-        setMessageType={setMessageType}
-      />
+      <Togglable buttonLabel="Create new todo">
+        <TodoForm
+          todos={todos}
+          setTodos={setTodos}
+          setMessage={setMessage}
+          setMessageType={setMessageType}
+        />
+      </Togglable>
       <button onClick={() => logOut()}>Log out</button>
     </div>
   )
