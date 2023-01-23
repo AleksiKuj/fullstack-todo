@@ -25,6 +25,7 @@ mongoose
   })
 
 app.use(express.json())
+app.use(cors())
 
 morgan.token("data", (req) => {
   const { body } = req
@@ -34,7 +35,6 @@ app.use(
   morgan(":method :url :status :res[content-length] :response-time ms :data")
 )
 
-app.use(cors())
 app.use("/api/todos", todosRouter)
 app.use("/api/users", usersRouter)
 app.use("/api/login", loginRouter)
