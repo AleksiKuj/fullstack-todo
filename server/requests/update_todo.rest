@@ -1,6 +1,6 @@
-PUT http://localhost:3001/api/todos/63ce66d946c78892e25a8ac4
+PUT http://localhost:3001/api/todos/63ce628c58504e071a3e8583
 Content-Type:application/json
 
 {
-    "title":"Updated title"
+    "title":""
 }

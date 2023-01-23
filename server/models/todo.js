@@ -1,20 +1,11 @@
 const config = require("../utils/config")
 const mongoose = require("mongoose")
 
-const mongoUrl = config.MONGODB_URI
-mongoose.set("strictQuery", false)
-
-mongoose
-  .connect(mongoUrl)
-  .then((result) => {
-    console.log("Connected to MongoDB")
-  })
-  .catch((error) => {
-    console.log("error", error.message)
-  })
-
 const todoSchema = new mongoose.Schema({
-  title: String,
+  title: {
+    type: String,
+    required: true,
+  },
   date: String,
 })
 

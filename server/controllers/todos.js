@@ -18,22 +18,20 @@ todosRouter.get("/:id", (request, response, next) => {
     .catch((error) => next(error))
 })
 
-todosRouter.post("/", (request, response) => {
+todosRouter.post("/", (request, response, next) => {
   const body = request.body
-  if (!body.title) {
-    return response.status(400).json({
-      error: "title missing",
-    })
-  }
 
   const todo = new Todo({
     title: body.title,
     date: new Date(),
   })
 
-  todo.save().then((savedTodo) => {
-    response.json(savedTodo)
-  })
+  todo
+    .save()
+    .then((savedTodo) => {
+      response.json(savedTodo)
+    })
+    .catch((error) => next(error))
 })
 todosRouter.delete("/:id", (request, response, next) => {
   Todo.findByIdAndRemove(request.params.id)
@@ -46,7 +44,11 @@ todosRouter.delete("/:id", (request, response, next) => {
 todosRouter.put("/:id", (request, response, next) => {
   const body = request.body
   const todo = { title: body.title }
-  Todo.findByIdAndUpdate(request.params.id, todo, { new: true })
+  Todo.findByIdAndUpdate(request.params.id, todo, {
+    new: true,
+    runValidators: true,
+    context: "query",
+  })
     .then((updatedTodo) => {
       response.json(updatedTodo)
     })
