@@ -5,6 +5,8 @@ const cors = require("cors")
 const app = express()
 const todosRouter = require("./controllers/todos")
 const usersRouter = require("./controllers/users")
+const loginRouter = require("./controllers/login")
+
 const middleware = require("./utils/middleware")
 const logger = require("./utils/logger")
 
@@ -35,6 +37,7 @@ app.use(
 app.use(cors())
 app.use("/api/todos", todosRouter)
 app.use("/api/users", usersRouter)
+app.use("/api/login", loginRouter)
 
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
