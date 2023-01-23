@@ -4,7 +4,9 @@ const morgan = require("morgan")
 const cors = require("cors")
 const app = express()
 const todosRouter = require("./controllers/todos")
+const usersRouter = require("./controllers/users")
 const middleware = require("./utils/middleware")
+const logger = require("./utils/logger")
 
 const mongoose = require("mongoose")
 
@@ -14,10 +16,10 @@ mongoose.set("strictQuery", false)
 mongoose
   .connect(mongoUrl)
   .then((result) => {
-    console.log("Connected to MongoDB")
+    logger.info("Connected to MongoDB")
   })
   .catch((error) => {
-    console.log("error", error.message)
+    logger.error("error", error.message)
   })
 
 app.use(express.json())
@@ -32,6 +34,7 @@ app.use(
 
 app.use(cors())
 app.use("/api/todos", todosRouter)
+app.use("/api/users", usersRouter)
 
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)

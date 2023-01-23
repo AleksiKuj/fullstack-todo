@@ -7,6 +7,10 @@ const todoSchema = new mongoose.Schema({
     required: true,
   },
   date: String,
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
 })
 
 todoSchema.set("toJSON", {

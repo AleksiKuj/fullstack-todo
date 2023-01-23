@@ -1,10 +1,10 @@
 const todosRouter = require("express").Router()
 const Todo = require("../models/todo")
+const User = require("../models/user")
 
 todosRouter.get("", async (request, response) => {
-  Todo.find({}).then((todos) => {
-    response.json(todos)
-  })
+  const todos = await Todo.find({}).populate("user", { username: 1, name: 1 })
+  response.json(todos)
 })
 todosRouter.get("/:id", (request, response, next) => {
   Todo.findById(request.params.id)
@@ -18,20 +18,22 @@ todosRouter.get("/:id", (request, response, next) => {
     .catch((error) => next(error))
 })
 
-todosRouter.post("/", (request, response, next) => {
+todosRouter.post("/", async (request, response, next) => {
   const body = request.body
+
+  const user = await User.findById(body.userId)
 
   const todo = new Todo({
     title: body.title,
     date: new Date(),
+    user: user._id,
   })
 
-  todo
-    .save()
-    .then((savedTodo) => {
-      response.json(savedTodo)
-    })
-    .catch((error) => next(error))
+  const savedTodo = await todo.save()
+  user.todos = user.todos.concat(savedTodo._id)
+  await user.save()
+
+  response.json(savedTodo)
 })
 todosRouter.delete("/:id", (request, response, next) => {
   Todo.findByIdAndRemove(request.params.id)
