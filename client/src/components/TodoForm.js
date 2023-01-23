@@ -1,30 +1,44 @@
 import { useState } from "react"
 import todoService from "../services/todos"
 
-const TodoForm = ({ todos, setTodos }) => {
+const TodoForm = ({ setTodos, setMessage, setMessageType }) => {
   const [todoTitle, setTodoTitle] = useState("")
 
   const add = async (todoObject) => {
     try {
       await todoService.createTodo(todoObject)
-
       todoService.getAll().then((todos) => setTodos(todos))
+      setMessageType("success")
+      setMessage(`Added ${todoObject.title}`)
+      setTimeout(() => {
+        setMessage(null)
+      }, 5000)
     } catch (exception) {
       console.log(exception)
+      setMessageType("error")
+      setMessage(exception.message)
+      setTimeout(() => {
+        setMessage(null)
+      }, 5000)
     }
   }
 
   const handleTitleChange = (event) => {
     setTodoTitle(event.target.value)
   }
+
   const handleSubmit = (event) => {
     event.preventDefault()
-    console.log("submit", todoTitle)
-    const todoObject = {
-      title: todoTitle,
+    try {
+      console.log("submit", todoTitle)
+      const todoObject = {
+        title: todoTitle,
+      }
+      add(todoObject)
+      setTodoTitle("")
+    } catch (exception) {
+      console.log("exception")
     }
-    add(todoObject)
-    setTodoTitle("")
   }
   return (
     <div>

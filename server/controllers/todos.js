@@ -30,27 +30,31 @@ todosRouter.get("/:id", (request, response, next) => {
     .catch((error) => next(error))
 })
 
-todosRouter.post("/", async (request, response) => {
-  const body = request.body
-  const token = getTokenFrom(request)
-  const decodedToken = jwt.verify(token, config.SECRET)
-  if (!token || !decodedToken.id) {
-    return response.status(401).json({ error: "token invalid" })
+todosRouter.post("/", async (request, response, next) => {
+  try {
+    const body = request.body
+    const token = getTokenFrom(request)
+    const decodedToken = jwt.verify(token, config.SECRET)
+    if (!token || !decodedToken.id) {
+      return response.status(401).json({ error: "token invalid" })
+    }
+
+    const user = await User.findById(decodedToken.id)
+
+    const todo = new Todo({
+      title: body.title,
+      date: new Date(),
+      user: user._id,
+    })
+
+    const savedTodo = await todo.save()
+    user.todos = user.todos.concat(savedTodo._id)
+    await user.save()
+
+    response.json(savedTodo)
+  } catch (error) {
+    next(error)
   }
-
-  const user = await User.findById(decodedToken.id)
-
-  const todo = new Todo({
-    title: body.title,
-    date: new Date(),
-    user: user._id,
-  })
-
-  const savedTodo = await todo.save()
-  user.todos = user.todos.concat(savedTodo._id)
-  await user.save()
-
-  response.json(savedTodo)
 })
 todosRouter.delete("/:id", (request, response, next) => {
   Todo.findByIdAndRemove(request.params.id)

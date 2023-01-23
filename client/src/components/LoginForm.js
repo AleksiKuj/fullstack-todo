@@ -1,7 +1,8 @@
 import loginService from "../services/login"
 import todoService from "../services/todos"
 import { useState } from "react"
-const LoginForm = ({ user, setUser }) => {
+
+const LoginForm = ({ setUser, setMessage, setMessageType }) => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
 
@@ -16,8 +17,18 @@ const LoginForm = ({ user, setUser }) => {
       setUser(user)
       setUsername("")
       setPassword("")
+      setMessageType("success")
+      setMessage(`${user.username} logged in`)
+      setTimeout(() => {
+        setMessage(null)
+      }, 5000)
     } catch (exception) {
       console.log("error", exception)
+      setMessageType("error")
+      setMessage(exception.message)
+      setTimeout(() => {
+        setMessage(null)
+      }, 5000)
     }
   }
   const handleUsernameChange = (event) => {

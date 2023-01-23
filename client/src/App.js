@@ -2,11 +2,14 @@ import todoService from "./services/todos"
 import TodoForm from "./components/TodoForm"
 import TodosList from "./components/TodosList"
 import LoginForm from "./components/LoginForm"
+import Notification from "./components/Notification"
 import { useState, useEffect } from "react"
 
 function App() {
   const [todos, setTodos] = useState([])
   const [user, setUser] = useState(null)
+  const [message, setMessage] = useState(null)
+  const [messageType, setMessageType] = useState(null)
 
   useEffect(() => {
     todoService.getAll().then((todos) => setTodos(todos))
@@ -27,15 +30,36 @@ function App() {
   }
 
   if (!user) {
-    return <LoginForm user={user} setUser={setUser} />
+    return (
+      <div>
+        <Notification message={message} messageType={messageType} />
+        <LoginForm
+          user={user}
+          setUser={setUser}
+          setMessage={setMessage}
+          setMessageType={setMessageType}
+        />
+      </div>
+    )
   }
 
   return (
     <div>
       <h1>Fullstack-Todo</h1>
-
-      <TodosList todos={todos} setTodos={setTodos} user={user} />
-      <TodoForm todos={todos} setTodos={setTodos} />
+      <Notification message={message} messageType={messageType} />
+      <TodosList
+        todos={todos}
+        setTodos={setTodos}
+        user={user}
+        setMessage={setMessage}
+        setMessageType={setMessageType}
+      />
+      <TodoForm
+        todos={todos}
+        setTodos={setTodos}
+        setMessage={setMessage}
+        setMessageType={setMessageType}
+      />
       <button onClick={() => logOut()}>Log out</button>
     </div>
   )
