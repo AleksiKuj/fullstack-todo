@@ -34,7 +34,7 @@ function App() {
     <div>
       <h1>Fullstack-Todo</h1>
 
-      <TodosList todos={todos} setTodos={setTodos} />
+      <TodosList todos={todos} setTodos={setTodos} user={user} />
       <TodoForm todos={todos} setTodos={setTodos} />
       <button onClick={() => logOut()}>Log out</button>
     </div>

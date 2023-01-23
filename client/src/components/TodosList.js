@@ -1,6 +1,6 @@
 import todoService from "../services/todos"
 
-const TodosList = ({ todos, setTodos }) => {
+const TodosList = ({ todos, setTodos, user }) => {
   const deleteTodo = async (todo) => {
     try {
       await todoService.deleteTodo(todo)
@@ -10,10 +10,16 @@ const TodosList = ({ todos, setTodos }) => {
       console.log(exception)
     }
   }
+
+  const usersTodos = () => {
+    return todos.filter((todo) => todo.user.username === user.username)
+  }
+
   return (
     <div>
+      <p>{`${user.username}'s Todos`}</p>
       <ul>
-        {todos.map((todo) => (
+        {usersTodos().map((todo) => (
           <li key={todo.id}>
             {todo.title}
             <button onClick={() => deleteTodo(todo)}>delete</button>
