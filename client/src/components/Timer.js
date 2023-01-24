@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import audio from "../assets/alarm_sound.mp3"
-import { Divider, Button, ButtonGroup, Text } from "@chakra-ui/react"
+import { Divider, Button, ButtonGroup, Text, Box } from "@chakra-ui/react"
 
 const Timer = () => {
   const [timeLeft, setTimeLeft] = useState(25 * 60)
@@ -54,32 +54,40 @@ const Timer = () => {
 
   return (
     <div>
-      <Text fontSize="lg" mt={5}>
-        Time left: {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
-      </Text>
-      <ButtonGroup mb={2}>
-        <Button onClick={togglePlay} colorScheme={`${play ? "red" : "green"}`}>
-          {play ? "Stop" : "Start"}
-        </Button>
-
-        <Button onClick={resetTime} colorScheme="purple">
-          {" "}
-          Reset
-        </Button>
-
-        {!isBreakMode ? (
-          <Button onClick={() => switchMode("break")} colorScheme="blue">
-            {" "}
-            Short break
+      <Box mt={6}>
+        <Text fontSize="lg" as="b" color="#2B6CB0">
+          Timer
+        </Text>
+        <Text fontSize="lg">
+          Time left: {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
+        </Text>
+        <ButtonGroup mb={2}>
+          <Button
+            onClick={togglePlay}
+            colorScheme={`${play ? "red" : "green"}`}
+          >
+            {play ? "Stop" : "Start"}
           </Button>
-        ) : (
-          <Button onClick={() => switchMode("pomodoro")} colorScheme="orange">
+
+          <Button onClick={resetTime} colorScheme="purple">
             {" "}
-            Pomodoro
+            Reset
           </Button>
-        )}
-      </ButtonGroup>
-      <Divider />
+
+          {!isBreakMode ? (
+            <Button onClick={() => switchMode("break")} colorScheme="blue">
+              {" "}
+              Short break
+            </Button>
+          ) : (
+            <Button onClick={() => switchMode("pomodoro")} colorScheme="orange">
+              {" "}
+              Pomodoro
+            </Button>
+          )}
+        </ButtonGroup>
+        <Divider />
+      </Box>
     </div>
   )
 }

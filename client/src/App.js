@@ -5,6 +5,8 @@ import LoginForm from "./components/LoginForm"
 import Notification from "./components/Notification"
 import Togglable from "./components/Togglable"
 import Timer from "./components/Timer"
+import Header from "./components/Header"
+import Footer from "./components/Footer"
 import { useState, useEffect } from "react"
 import {
   Button,
@@ -43,29 +45,30 @@ function App() {
 
   if (!user) {
     return (
-      <div>
-        <Heading as="h1" size="2xl">
-          Fullstack-Todo
-        </Heading>
-        <Notification message={message} messageType={messageType} />
-        <LoginForm
-          user={user}
-          setUser={setUser}
-          setMessage={setMessage}
-          setMessageType={setMessageType}
-        />
+      <div
+        style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
+      >
+        <Header />
+        <Container maxW="3xl" style={{ flexGrow: 1 }}>
+          <Notification message={message} messageType={messageType} />
+          <LoginForm
+            user={user}
+            setUser={setUser}
+            setMessage={setMessage}
+            setMessageType={setMessageType}
+          />
+        </Container>
+        <Footer />
       </div>
     )
   }
 
   return (
-    <div>
-      <Container>
-        {/* <Flex direction="column" align="center"> */}
-        <Heading as="h1" size="2xl">
-          Fullstack-Todo
-        </Heading>
-
+    <div
+      style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
+    >
+      <Header />
+      <Container maxW="3xl" style={{ flexGrow: 1 }}>
         <Notification message={message} messageType={messageType} />
         <TodosList
           todos={todos}
@@ -86,8 +89,8 @@ function App() {
         <Button onClick={() => logOut()} my={2}>
           Log out
         </Button>
-        {/* </Flex> */}
       </Container>
+      <Footer />
     </div>
   )
 }
