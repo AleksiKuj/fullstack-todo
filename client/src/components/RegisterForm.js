@@ -1,6 +1,6 @@
 import loginService from "../services/login"
+import userService from "../services/users"
 import todoService from "../services/todos"
-import RegisterForm from "./RegisterForm"
 import { useState } from "react"
 import {
   Button,
@@ -8,31 +8,39 @@ import {
   InputGroup,
   InputRightElement,
   Heading,
-  Text,
 } from "@chakra-ui/react"
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons"
 
-const LoginForm = ({ setUser, setMessage, setMessageType }) => {
+const RegisterForm = ({ setUser, setMessage, setMessageType }) => {
+  const [users, setUsers] = useState([0])
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [showPassword, setShowPassword] = useState(false)
-  const handleLogin = async (event) => {
+
+  const handleRegister = async (event) => {
     event.preventDefault()
+    await userService.getAll().then((users) => setUsers(users))
+
+    if (users.findIndex((u) => u.username === username) !== -1) {
+      setMessageType("error")
+      setMessage("Username already exists")
+      setTimeout(() => {
+        setMessage(null)
+      }, 5000)
+      return
+    }
     try {
-      const user = await loginService.login({ username, password })
+      const user = await userService.register({ username, password })
 
-      window.localStorage.setItem("loggedTodoUser", JSON.stringify(user))
-
-      todoService.setToken(user.token)
-      setUser(user)
+      setMessageType("success")
+      setMessage(`${username} succesfully registered`)
       setUsername("")
       setPassword("")
-      setMessageType("success")
-      setMessage(`${user.username} logged in`)
       setTimeout(() => {
         setMessage(null)
       }, 5000)
     } catch (exception) {
+      console.log("testi")
       console.log("error", exception)
       setMessageType("error")
       setMessage(exception.message)
@@ -51,9 +59,9 @@ const LoginForm = ({ setUser, setMessage, setMessageType }) => {
   return (
     <div>
       <Heading as="h2" size="xl" my="2rem">
-        Log in
+        Register
       </Heading>
-      <form onSubmit={handleLogin}>
+      <form onSubmit={handleRegister}>
         <div>
           <Input
             value={username}
@@ -82,15 +90,11 @@ const LoginForm = ({ setUser, setMessage, setMessageType }) => {
             </InputRightElement>
           </InputGroup>
           <Button type="submit" colorScheme="teal" variant="solid">
-            Login
+            Register
           </Button>
         </div>
       </form>
-      <Text>Test account credentials</Text>
-      <Text>username: test</Text>
-      <Text>password: test</Text>
-      <RegisterForm setMessage={setMessage} setMessageType={setMessageType} />
     </div>
   )
 }
-export default LoginForm
+export default RegisterForm
