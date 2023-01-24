@@ -8,16 +8,7 @@ import Timer from "./components/Timer"
 import Header from "./components/Header"
 import Footer from "./components/Footer"
 import { useState, useEffect } from "react"
-import {
-  Button,
-  Input,
-  InputGroup,
-  InputRightElement,
-  Heading,
-  Flex,
-  Spacer,
-  Container,
-} from "@chakra-ui/react"
+import { Button, Container } from "@chakra-ui/react"
 
 function App() {
   const [todos, setTodos] = useState([])

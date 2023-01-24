@@ -1,31 +1,23 @@
 import todoService from "../services/todos"
+import UpdateForm from "./UpdateForm"
+import { useState } from "react"
 import {
-  Button,
-  List,
   ListItem,
   UnorderedList,
-  Input,
-  InputGroup,
-  InputRightElement,
   Heading,
-  useDisclosure,
-  AlertDialog,
-  AlertDialogOverlay,
-  AlertDialogContent,
-  AlertDialogHeader,
-  AlertDialogBody,
-  AlertDialogFooter,
   IconButton,
   Divider,
   Text,
   Stack,
+  useDisclosure,
 } from "@chakra-ui/react"
-import { DeleteIcon } from "@chakra-ui/icons"
-import { useRef } from "react"
+import { DeleteIcon, SettingsIcon } from "@chakra-ui/icons"
 
 const TodosList = ({ todos, setTodos, user, setMessage, setMessageType }) => {
-  const cancelRef = useRef()
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const [activeTodo, setActiveTodo] = useState(undefined)
+  const [activeTodoTitle, setActiveTodoTitle] = useState("")
+  const [activeTodoDescription, setActiveTodoDescription] = useState("")
 
   const deleteTodo = async (todo) => {
     try {
@@ -53,7 +45,6 @@ const TodosList = ({ todos, setTodos, user, setMessage, setMessageType }) => {
 
   const handleDelete = (todo) => {
     deleteTodo(todo)
-    onClose()
   }
 
   const priorities = (todo) => {
@@ -74,7 +65,12 @@ const TodosList = ({ todos, setTodos, user, setMessage, setMessageType }) => {
       return "purple"
     }
   }
-
+  const x = (todo) => {
+    setActiveTodo(todo)
+    setActiveTodoTitle(todo.title)
+    setActiveTodoDescription(todo.description)
+    onOpen()
+  }
   return (
     <div>
       <Heading as="h2" size="lg" my="1rem" color="#2B6CB0">
@@ -94,6 +90,13 @@ const TodosList = ({ todos, setTodos, user, setMessage, setMessageType }) => {
                   variant="ghost"
                   icon={<DeleteIcon />}
                 />
+                <IconButton
+                  onClick={() => x(todo)}
+                  aria-label="Delete todo"
+                  colorScheme="black"
+                  variant="ghost"
+                  icon={<SettingsIcon />}
+                />
               </Text>
               <Text overflow="hidden" as="em" fontSize="md">
                 {todo.description ? todo.description : ""}
@@ -111,6 +114,18 @@ const TodosList = ({ todos, setTodos, user, setMessage, setMessageType }) => {
           </ListItem>
         ))}
       </UnorderedList>
+      <UpdateForm
+        isOpen={isOpen}
+        onClose={onClose}
+        onOpen={onOpen}
+        activeTodo={activeTodo}
+        todos={todos}
+        setTodos={setTodos}
+        activeTodoTitle={activeTodoTitle}
+        activeTodoDescription={activeTodoDescription}
+        setMessage={setMessage}
+        setMessageType={setMessageType}
+      />
     </div>
   )
 }

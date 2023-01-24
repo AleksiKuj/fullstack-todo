@@ -25,8 +25,8 @@ const deleteTodo = async (todo) => {
   return response.data
 }
 
-const updateTodo = (id, newTodo) => {
-  const request = axios.put(`${baseUrl}/${id}`, newTodo)
+const updateTodo = async (id, newTodo) => {
+  const request = axios.patch(`${baseUrl}/${id}`, newTodo)
   return request.then((response) => response.data)
 }
 const exports = {

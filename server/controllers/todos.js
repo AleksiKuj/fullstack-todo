@@ -66,9 +66,13 @@ todosRouter.delete("/:id", (request, response, next) => {
     .catch((error) => next(error))
 })
 
-todosRouter.put("/:id", (request, response, next) => {
+todosRouter.patch("/:id", (request, response, next) => {
   const body = request.body
-  const todo = { title: body.title }
+  const todo = {
+    title: body.title,
+    description: body.description,
+    priority: body.priority,
+  }
   Todo.findByIdAndUpdate(request.params.id, todo, {
     new: true,
     runValidators: true,

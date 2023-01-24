@@ -1,6 +1,8 @@
-PUT http://localhost:3001/api/todos/63ce628c58504e071a3e8583
+PATCH http://localhost:3001/api/todos/63cfd1242e5a7e3de6888910
 Content-Type:application/json
 
 {
-    "title":""
+    "title":"gfd",
+    "description":"desc",
+    "priority":2
 }
