@@ -7,6 +7,10 @@ const todoSchema = new mongoose.Schema({
     required: true,
   },
   description: String,
+  priority: {
+    type: Number,
+    required: true,
+  },
   date: String,
   user: {
     type: mongoose.Schema.Types.ObjectId,

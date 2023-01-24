@@ -44,6 +44,7 @@ todosRouter.post("/", async (request, response, next) => {
     const todo = new Todo({
       title: body.title,
       description: body.description,
+      priority: body.priority,
       date: new Date(),
       user: user._id,
     })

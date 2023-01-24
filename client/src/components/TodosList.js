@@ -18,6 +18,7 @@ import {
   IconButton,
   Divider,
   Text,
+  Stack,
 } from "@chakra-ui/react"
 import { DeleteIcon } from "@chakra-ui/icons"
 import { useRef } from "react"
@@ -55,6 +56,25 @@ const TodosList = ({ todos, setTodos, user, setMessage, setMessageType }) => {
     onClose()
   }
 
+  const priorities = (todo) => {
+    if (todo.priority === 1) {
+      return "none"
+    } else if (todo.priority === 2) {
+      return "normal"
+    } else if (todo.priority === 3) {
+      return "critical"
+    }
+  }
+  const priorityColor = (todo) => {
+    if (todo.priority === 1) {
+      return "teal"
+    } else if (todo.priority === 2) {
+      return "black"
+    } else if (todo.priority === 3) {
+      return "purple"
+    }
+  }
+
   return (
     <div>
       <Heading as="h2" size="lg" my="1rem" color="#2B6CB0">
@@ -64,19 +84,29 @@ const TodosList = ({ todos, setTodos, user, setMessage, setMessageType }) => {
       <UnorderedList styleType="none" mb={5}>
         {usersTodos().map((todo) => (
           <ListItem key={todo.id}>
-            <Text overflow="hidden" fontSize="lg">
-              {todo.title}
-              <IconButton
-                onClick={() => handleDelete(todo)}
-                aria-label="Delete todo"
-                colorScheme="red"
-                variant="ghost"
-                icon={<DeleteIcon />}
-              />
-            </Text>
-            <Text overflow="hidden" as="em" fontSize="md">
-              {todo.description ? todo.description : ""}
-            </Text>
+            <Stack>
+              <Text overflow="hidden" fontSize="lg">
+                {todo.title}
+                <IconButton
+                  onClick={() => handleDelete(todo)}
+                  aria-label="Delete todo"
+                  colorScheme="red"
+                  variant="ghost"
+                  icon={<DeleteIcon />}
+                />
+              </Text>
+              <Text overflow="hidden" as="em" fontSize="md">
+                {todo.description ? todo.description : ""}
+              </Text>
+              <Text
+                overflow="hidden"
+                as="em"
+                fontSize="sm"
+                color={priorityColor(todo)}
+              >
+                {todo.priority ? `Priority: ${priorities(todo)}` : ""}
+              </Text>
+            </Stack>
             <Divider />
           </ListItem>
         ))}
