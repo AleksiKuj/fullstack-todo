@@ -1,11 +1,19 @@
 import loginService from "../services/login"
 import todoService from "../services/todos"
 import { useState } from "react"
+import {
+  Button,
+  Input,
+  InputGroup,
+  InputRightElement,
+  Heading,
+} from "@chakra-ui/react"
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons"
 
 const LoginForm = ({ setUser, setMessage, setMessageType }) => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
-
+  const [showPassword, setShowPassword] = useState(false)
   const handleLogin = async (event) => {
     event.preventDefault()
     try {
@@ -37,24 +45,43 @@ const LoginForm = ({ setUser, setMessage, setMessageType }) => {
   const handlePasswordChange = (event) => {
     setPassword(event.target.value)
   }
+
   return (
     <div>
-      <h1>Log in</h1>
+      <Heading as="h2" size="xl" my="2rem">
+        Log in
+      </Heading>
       <form onSubmit={handleLogin}>
         <div>
-          <p>
-            username{" "}
-            <input value={username} onChange={handleUsernameChange}></input>
-          </p>
-          <p>
-            password{" "}
-            <input
+          <Input
+            value={username}
+            onChange={handleUsernameChange}
+            color="teal"
+            placeholder="Username"
+            _placeholder={{ color: "inherit" }}
+          />
+          <InputGroup my="1em">
+            <Input
               value={password}
-              type="password"
+              type={showPassword ? "text" : "password"}
               onChange={handlePasswordChange}
-            ></input>
-          </p>
-          <button type="submit">Login</button>
+              color="teal"
+              placeholder="Password"
+              _placeholder={{ color: "inherit" }}
+            />
+            <InputRightElement width="4.5rem">
+              <Button
+                h="1.75rem"
+                size="sm"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <ViewOffIcon /> : <ViewIcon />}
+              </Button>
+            </InputRightElement>
+          </InputGroup>
+          <Button type="submit" colorScheme="teal" variant="solid">
+            Login
+          </Button>
         </div>
       </form>
     </div>

@@ -1,10 +1,12 @@
+import { Alert, AlertIcon } from "@chakra-ui/react"
+
 const Notification = ({ message, messageType }) => {
-  const styles = {
-    background: messageType !== "error" ? "green" : "red",
-  }
   return (
-    <div style={styles}>
-      <p>{message}</p>
+    <div style={{ display: message ? "" : "none" }}>
+      <Alert status={messageType ? messageType : "info"}>
+        <AlertIcon />
+        {message}
+      </Alert>
     </div>
   )
 }

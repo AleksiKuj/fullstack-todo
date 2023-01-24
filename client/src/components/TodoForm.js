@@ -1,5 +1,12 @@
 import { useState } from "react"
 import todoService from "../services/todos"
+import {
+  Button,
+  Input,
+  InputGroup,
+  InputRightElement,
+  Heading,
+} from "@chakra-ui/react"
 
 const TodoForm = ({ setTodos, setMessage, setMessageType }) => {
   const [todoTitle, setTodoTitle] = useState("")
@@ -43,10 +50,16 @@ const TodoForm = ({ setTodos, setMessage, setMessageType }) => {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <h2>Add todo</h2>
-        <p>todo title</p>
-        <input value={todoTitle} onChange={handleTitleChange}></input>
-        <button type="submit">Create</button>
+        {/* <h2>Add todo</h2> */}
+        {/* <p>todo title</p> */}
+        <Input
+          value={todoTitle}
+          onChange={handleTitleChange}
+          placeholder="Todo title"
+        />
+        <Button type="submit" colorScheme="teal" variant="ghost">
+          Create
+        </Button>
       </form>
     </div>
   )

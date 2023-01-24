@@ -6,6 +6,16 @@ import Notification from "./components/Notification"
 import Togglable from "./components/Togglable"
 import Timer from "./components/Timer"
 import { useState, useEffect } from "react"
+import {
+  Button,
+  Input,
+  InputGroup,
+  InputRightElement,
+  Heading,
+  Flex,
+  Spacer,
+  Container,
+} from "@chakra-ui/react"
 
 function App() {
   const [todos, setTodos] = useState([])
@@ -34,6 +44,9 @@ function App() {
   if (!user) {
     return (
       <div>
+        <Heading as="h1" size="2xl">
+          Fullstack-Todo
+        </Heading>
         <Notification message={message} messageType={messageType} />
         <LoginForm
           user={user}
@@ -47,25 +60,34 @@ function App() {
 
   return (
     <div>
-      <h1>Fullstack-Todo</h1>
-      <Notification message={message} messageType={messageType} />
-      <TodosList
-        todos={todos}
-        setTodos={setTodos}
-        user={user}
-        setMessage={setMessage}
-        setMessageType={setMessageType}
-      />
-      <Togglable buttonLabel="Create new todo">
-        <TodoForm
+      <Container>
+        {/* <Flex direction="column" align="center"> */}
+        <Heading as="h1" size="2xl">
+          Fullstack-Todo
+        </Heading>
+
+        <Notification message={message} messageType={messageType} />
+        <TodosList
           todos={todos}
           setTodos={setTodos}
+          user={user}
           setMessage={setMessage}
           setMessageType={setMessageType}
         />
-      </Togglable>
-      <Timer />
-      <button onClick={() => logOut()}>Log out</button>
+        <Togglable buttonLabel="Create new todo">
+          <TodoForm
+            todos={todos}
+            setTodos={setTodos}
+            setMessage={setMessage}
+            setMessageType={setMessageType}
+          />
+        </Togglable>
+        <Timer />
+        <Button onClick={() => logOut()} my={2}>
+          Log out
+        </Button>
+        {/* </Flex> */}
+      </Container>
     </div>
   )
 }
