@@ -61,10 +61,10 @@ const TodosList = ({ todos, setTodos, user, setMessage, setMessageType }) => {
         {user.username}'s todolist
       </Heading>
       <Divider />
-      <UnorderedList styleType="none">
+      <UnorderedList styleType="none" mb={5}>
         {usersTodos().map((todo) => (
           <ListItem key={todo.id}>
-            <Text overflow="hidden">
+            <Text overflow="hidden" fontSize="lg">
               {todo.title}
               <IconButton
                 onClick={() => handleDelete(todo)}
@@ -73,6 +73,9 @@ const TodosList = ({ todos, setTodos, user, setMessage, setMessageType }) => {
                 variant="ghost"
                 icon={<DeleteIcon />}
               />
+            </Text>
+            <Text overflow="hidden" as="em" fontSize="md">
+              {todo.description ? todo.description : ""}
             </Text>
             <Divider />
           </ListItem>

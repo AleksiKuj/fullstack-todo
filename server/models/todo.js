@@ -6,6 +6,7 @@ const todoSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  description: String,
   date: String,
   user: {
     type: mongoose.Schema.Types.ObjectId,

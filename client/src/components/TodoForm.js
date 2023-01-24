@@ -1,15 +1,10 @@
 import { useState } from "react"
 import todoService from "../services/todos"
-import {
-  Button,
-  Input,
-  InputGroup,
-  InputRightElement,
-  Heading,
-} from "@chakra-ui/react"
+import { Button, Input, Stack } from "@chakra-ui/react"
 
 const TodoForm = ({ setTodos, setMessage, setMessageType }) => {
   const [todoTitle, setTodoTitle] = useState("")
+  const [todoDescription, setTodoDescription] = useState("")
 
   const add = async (todoObject) => {
     try {
@@ -33,6 +28,9 @@ const TodoForm = ({ setTodos, setMessage, setMessageType }) => {
   const handleTitleChange = (event) => {
     setTodoTitle(event.target.value)
   }
+  const handleDescriptionChange = (event) => {
+    setTodoDescription(event.target.value)
+  }
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -40,9 +38,11 @@ const TodoForm = ({ setTodos, setMessage, setMessageType }) => {
       console.log("submit", todoTitle)
       const todoObject = {
         title: todoTitle,
+        description: todoDescription,
       }
       add(todoObject)
       setTodoTitle("")
+      setTodoDescription("")
     } catch (exception) {
       console.log("exception")
     }
@@ -50,13 +50,18 @@ const TodoForm = ({ setTodos, setMessage, setMessageType }) => {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        {/* <h2>Add todo</h2> */}
-        {/* <p>todo title</p> */}
-        <Input
-          value={todoTitle}
-          onChange={handleTitleChange}
-          placeholder="Todo title"
-        />
+        <Stack>
+          <Input
+            value={todoTitle}
+            onChange={handleTitleChange}
+            placeholder="Title *"
+          />
+          <Input
+            value={todoDescription}
+            onChange={handleDescriptionChange}
+            placeholder="Description"
+          />
+        </Stack>
         <Button type="submit" colorScheme="teal" variant="ghost">
           Create
         </Button>
