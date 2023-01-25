@@ -72,7 +72,7 @@ const TodoForm = ({ setTodos, setMessage, setMessageType }) => {
           />
           <RadioGroup onChange={setPriority} value={priority}>
             <Stack direction="row">
-              <Radio value="1">None</Radio>
+              <Radio value="1">Low</Radio>
               <Radio value="2">Normal</Radio>
               <Radio value="3">Critical</Radio>
             </Stack>

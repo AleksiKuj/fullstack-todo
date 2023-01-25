@@ -34,7 +34,6 @@ const UpdateForm = ({
   const [priority, setPriority] = useState(2)
 
   useEffect(() => {
-    //TODO: CLEAN CODE IMPORT ONLY ACTIVETODO AND USE ACTIVETODO.TITLE ACTIVETODO.DESC ..
     setTodoTitle(activeTodoTitle)
     setTodoDescription(activeTodoDescription)
     console.log(activeTodoTitle)
@@ -106,7 +105,7 @@ const UpdateForm = ({
                 <RadioGroup onChange={setPriority} value={priority}>
                   <Text>Priority</Text>
                   <Stack direction="row">
-                    <Radio value="1">None</Radio>
+                    <Radio value="1">Low</Radio>
                     <Radio value="2">Normal</Radio>
                     <Radio value="3">Critical</Radio>
                   </Stack>

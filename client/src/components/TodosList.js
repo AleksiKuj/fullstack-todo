@@ -23,7 +23,6 @@ import {
   PopoverFooter,
   PopoverArrow,
   PopoverCloseButton,
-  PopoverAnchor,
   Button,
   Portal,
 } from "@chakra-ui/react"
@@ -72,7 +71,7 @@ const TodosList = ({
 
   const priorities = (todo) => {
     if (todo.priority === 1) {
-      return "none"
+      return "low"
     } else if (todo.priority === 2) {
       return "normal"
     } else if (todo.priority === 3) {
@@ -164,14 +163,14 @@ const TodosList = ({
   return (
     <div>
       <Heading as="h2" size="lg" my="1rem" color="#2B6CB0">
-        {user.username}'s todolist{" "}
+        {user.username}'s tasks
         <span style={{ float: "right" }}>{children}</span>
       </Heading>
       <Divider />
       <Tabs isLazy variant="line">
         <TabList>
           <Tab color="#2B6CB0">All</Tab>
-          <Tab color="teal">None</Tab>
+          <Tab color="teal">Low</Tab>
           <Tab>Normal</Tab>
           <Tab color="purple">Critical</Tab>
         </TabList>

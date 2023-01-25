@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const baseUrl = "/api/users"
+const baseUrl = "https://fullstack-todo-oxw2.onrender.com/api/users"
 const register = async (credentials) => {
   try {
     const response = await axios.post(baseUrl, credentials)

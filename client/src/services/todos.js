@@ -1,5 +1,5 @@
 import axios from "axios"
-const baseUrl = "/api/todos"
+const baseUrl = "https://fullstack-todo-oxw2.onrender.com/api/todos"
 
 let token = null
 

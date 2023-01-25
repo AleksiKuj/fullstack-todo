@@ -72,7 +72,7 @@ function App() {
             Log out
           </Button>
         </TodosList>
-        <Togglable buttonLabel="Create new todo">
+        <Togglable buttonLabel="Add new task">
           <TodoForm
             todos={todos}
             setTodos={setTodos}
