@@ -10,6 +10,11 @@ import {
   Text,
   Stack,
   useDisclosure,
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
 } from "@chakra-ui/react"
 import { DeleteIcon, SettingsIcon } from "@chakra-ui/icons"
 
@@ -71,49 +76,71 @@ const TodosList = ({ todos, setTodos, user, setMessage, setMessageType }) => {
     setActiveTodoDescription(todo.description)
     onOpen()
   }
+
+  const todosSortedByPriority = (priority) => {
+    return (
+      <UnorderedList styleType="none" mb={5}>
+        {usersTodos()
+          // .filter((todo) => todo.priority === priority)
+          .filter((todo) => (priority ? todo.priority === priority : todo))
+          .map((todo) => (
+            <ListItem key={todo.id}>
+              <Stack>
+                <Text overflow="hidden" fontSize="lg">
+                  {todo.title}
+                  <IconButton
+                    onClick={() => handleDelete(todo)}
+                    aria-label="Delete todo"
+                    colorScheme="red"
+                    variant="ghost"
+                    icon={<DeleteIcon />}
+                  />
+                  <IconButton
+                    onClick={() => x(todo)}
+                    aria-label="Delete todo"
+                    colorScheme="black"
+                    variant="ghost"
+                    icon={<SettingsIcon />}
+                  />
+                </Text>
+                <Text overflow="hidden" as="em" fontSize="md">
+                  {todo.description ? todo.description : ""}
+                </Text>
+                <Text
+                  overflow="hidden"
+                  as="em"
+                  fontSize="sm"
+                  color={priorityColor(todo)}
+                >
+                  {todo.priority ? `Priority: ${priorities(todo)}` : ""}
+                </Text>
+              </Stack>
+              <Divider />
+            </ListItem>
+          ))}
+      </UnorderedList>
+    )
+  }
   return (
     <div>
       <Heading as="h2" size="lg" my="1rem" color="#2B6CB0">
         {user.username}'s todolist
       </Heading>
       <Divider />
-      <UnorderedList styleType="none" mb={5}>
-        {usersTodos().map((todo) => (
-          <ListItem key={todo.id}>
-            <Stack>
-              <Text overflow="hidden" fontSize="lg">
-                {todo.title}
-                <IconButton
-                  onClick={() => handleDelete(todo)}
-                  aria-label="Delete todo"
-                  colorScheme="red"
-                  variant="ghost"
-                  icon={<DeleteIcon />}
-                />
-                <IconButton
-                  onClick={() => x(todo)}
-                  aria-label="Delete todo"
-                  colorScheme="black"
-                  variant="ghost"
-                  icon={<SettingsIcon />}
-                />
-              </Text>
-              <Text overflow="hidden" as="em" fontSize="md">
-                {todo.description ? todo.description : ""}
-              </Text>
-              <Text
-                overflow="hidden"
-                as="em"
-                fontSize="sm"
-                color={priorityColor(todo)}
-              >
-                {todo.priority ? `Priority: ${priorities(todo)}` : ""}
-              </Text>
-            </Stack>
-            <Divider />
-          </ListItem>
-        ))}
-      </UnorderedList>
+      <Tabs isLazy variant="line">
+        <TabList>
+          <Tab color="#2B6CB0">All</Tab>
+          <Tab color="teal">None</Tab>
+          <Tab>Normal</Tab>
+          <Tab color="purple">Critical</Tab>
+        </TabList>
+        <TabPanels>
+          <TabPanel>{todosSortedByPriority()}</TabPanel>
+          <TabPanel>{todosSortedByPriority(1)}</TabPanel>
+          <TabPanel>{todosSortedByPriority(2)}</TabPanel>
+          <TabPanel>{todosSortedByPriority(3)}</TabPanel>
+        </TabPanels>
+      </Tabs>
       <UpdateForm
         isOpen={isOpen}
         onClose={onClose}
