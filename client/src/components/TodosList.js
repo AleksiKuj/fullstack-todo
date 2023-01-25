@@ -100,6 +100,7 @@ const TodosList = ({
         <PopoverTrigger>
           <IconButton
             // onClick={() => handleDelete(todo)}
+            className="open-delete"
             aria-label="Delete todo"
             colorScheme="red"
             variant="ghost"
@@ -112,7 +113,11 @@ const TodosList = ({
             <PopoverHeader>Delete item?</PopoverHeader>
             <PopoverCloseButton />
             <PopoverBody>
-              <Button colorScheme="red" onClick={() => handleDelete(todo)}>
+              <Button
+                id="delete-button"
+                colorScheme="red"
+                onClick={() => handleDelete(todo)}
+              >
                 Delete
               </Button>
             </PopoverBody>
@@ -135,6 +140,7 @@ const TodosList = ({
                   {todo.title}
                   {popover(todo)}
                   <IconButton
+                    className="open-edit"
                     onClick={() => setTodoForUpdate(todo)}
                     aria-label="Update todo"
                     colorScheme="black"

@@ -16,6 +16,7 @@ const Togglable = (props) => {
     <div>
       <div style={hideWhenVisible}>
         <Button
+          id="visibility-toggle"
           onClick={toggleVisibility}
           colorScheme="teal"
           variant="ghost"

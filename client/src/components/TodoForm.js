@@ -61,24 +61,37 @@ const TodoForm = ({ setTodos, setMessage, setMessageType }) => {
       <form onSubmit={handleSubmit}>
         <Stack>
           <Input
+            id="title-input"
             value={todoTitle}
             onChange={handleTitleChange}
             placeholder="Title *"
           />
           <Textarea
+            id="description-input"
             value={todoDescription}
             onChange={handleDescriptionChange}
             placeholder="Description"
           />
           <RadioGroup onChange={setPriority} value={priority}>
             <Stack direction="row">
-              <Radio value="1">Low</Radio>
-              <Radio value="2">Normal</Radio>
-              <Radio value="3">Critical</Radio>
+              <Radio value="1" id="priority-1">
+                Low
+              </Radio>
+              <Radio value="2" id="priority-2">
+                Normal
+              </Radio>
+              <Radio value="3" id="priority-3">
+                Critical
+              </Radio>
             </Stack>
           </RadioGroup>
         </Stack>
-        <Button type="submit" colorScheme="teal" variant="ghost">
+        <Button
+          id="todo-submit"
+          type="submit"
+          colorScheme="teal"
+          variant="ghost"
+        >
           Create
         </Button>
       </form>

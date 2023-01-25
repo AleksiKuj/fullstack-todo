@@ -93,11 +93,13 @@ const UpdateForm = ({
             <form onSubmit={handleSubmit}>
               <Stack>
                 <Input
+                  id="update-title"
                   value={todoTitle}
                   onChange={handleTitleChange}
                   placeholder="Title *"
                 />
                 <Textarea
+                  id="update-description"
                   value={todoDescription}
                   onChange={handleDescriptionChange}
                   placeholder="Description"
@@ -116,6 +118,7 @@ const UpdateForm = ({
           <ModalFooter>
             <ButtonGroup gap={1}>
               <Button
+                id="update-submit"
                 onClick={() => handleSubmit(activeTodo)}
                 colorScheme="blue"
               >

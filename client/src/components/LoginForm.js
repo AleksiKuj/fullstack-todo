@@ -72,6 +72,7 @@ const LoginForm = ({ setUser, setMessage, setMessageType }) => {
                   <FormControl id="usename">
                     <FormLabel>Username</FormLabel>
                     <Input
+                      id="username"
                       value={username}
                       onChange={handleUsernameChange}
                       _placeholder={{ color: "inherit" }}
@@ -81,6 +82,7 @@ const LoginForm = ({ setUser, setMessage, setMessageType }) => {
                     <FormLabel>Password</FormLabel>
                     <InputGroup my="1em">
                       <Input
+                        id="password"
                         value={password}
                         type={showPassword ? "text" : "password"}
                         onChange={handlePasswordChange}
@@ -110,6 +112,7 @@ const LoginForm = ({ setUser, setMessage, setMessageType }) => {
                       </Link>
                     </Stack>
                     <Button
+                      id="login-button"
                       type="submit"
                       bg={"blue.400"}
                       color={"white"}
