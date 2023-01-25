@@ -1,6 +1,13 @@
 import { useState } from "react"
 import todoService from "../services/todos"
-import { Button, Input, Stack, Radio, RadioGroup } from "@chakra-ui/react"
+import {
+  Button,
+  Input,
+  Stack,
+  Radio,
+  RadioGroup,
+  Textarea,
+} from "@chakra-ui/react"
 
 const TodoForm = ({ setTodos, setMessage, setMessageType }) => {
   const [todoTitle, setTodoTitle] = useState("")
@@ -58,7 +65,7 @@ const TodoForm = ({ setTodos, setMessage, setMessageType }) => {
             onChange={handleTitleChange}
             placeholder="Title *"
           />
-          <Input
+          <Textarea
             value={todoDescription}
             onChange={handleDescriptionChange}
             placeholder="Description"

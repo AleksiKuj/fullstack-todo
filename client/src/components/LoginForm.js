@@ -9,6 +9,12 @@ import {
   InputRightElement,
   Heading,
   Text,
+  Flex,
+  Box,
+  FormControl,
+  FormLabel,
+  Stack,
+  Link,
 } from "@chakra-ui/react"
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons"
 
@@ -16,6 +22,7 @@ const LoginForm = ({ setUser, setMessage, setMessageType }) => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [showPassword, setShowPassword] = useState(false)
+  const [showLoginForm, setShowLoginForm] = useState(true)
   const handleLogin = async (event) => {
     event.preventDefault()
     try {
@@ -50,46 +57,80 @@ const LoginForm = ({ setUser, setMessage, setMessageType }) => {
 
   return (
     <div>
-      <Heading as="h2" size="xl" my="2rem">
-        Log in
-      </Heading>
-      <form onSubmit={handleLogin}>
-        <div>
-          <Input
-            value={username}
-            onChange={handleUsernameChange}
-            color="teal"
-            placeholder="Username"
-            _placeholder={{ color: "inherit" }}
-          />
-          <InputGroup my="1em">
-            <Input
-              value={password}
-              type={showPassword ? "text" : "password"}
-              onChange={handlePasswordChange}
-              color="teal"
-              placeholder="Password"
-              _placeholder={{ color: "inherit" }}
-            />
-            <InputRightElement width="4.5rem">
-              <Button
-                h="1.75rem"
-                size="sm"
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                {showPassword ? <ViewOffIcon /> : <ViewIcon />}
-              </Button>
-            </InputRightElement>
-          </InputGroup>
-          <Button type="submit" colorScheme="teal" variant="solid">
-            Login
-          </Button>
-        </div>
-      </form>
-      <Text>Test account credentials</Text>
-      <Text>username: test</Text>
-      <Text>password: test</Text>
-      <RegisterForm setMessage={setMessage} setMessageType={setMessageType} />
+      {showLoginForm ? (
+        <Flex minH={"100vh"} align={"center"} justify={"center"}>
+          <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
+            <Stack align={"center"}>
+              <Heading fontSize={"4xl"}>Sign in</Heading>
+              <Text fontSize={"lg"} color={"gray.600"}>
+                Test account credentials are test:test
+              </Text>
+            </Stack>
+            <Box rounded={"lg"} boxShadow={"lg"} p={8}>
+              <Stack spacing={4}>
+                <form onSubmit={handleLogin}>
+                  <FormControl id="usename">
+                    <FormLabel>Username</FormLabel>
+                    <Input
+                      value={username}
+                      onChange={handleUsernameChange}
+                      _placeholder={{ color: "inherit" }}
+                    />
+                  </FormControl>
+                  <FormControl id="password">
+                    <FormLabel>Password</FormLabel>
+                    <InputGroup my="1em">
+                      <Input
+                        value={password}
+                        type={showPassword ? "text" : "password"}
+                        onChange={handlePasswordChange}
+                      />
+                      <InputRightElement width="4.5rem">
+                        <Button
+                          h="1.75rem"
+                          size="sm"
+                          onClick={() => setShowPassword(!showPassword)}
+                        >
+                          {showPassword ? <ViewOffIcon /> : <ViewIcon />}
+                        </Button>
+                      </InputRightElement>
+                    </InputGroup>
+                  </FormControl>
+                  <Stack spacing={10}>
+                    <Stack
+                      direction={{ base: "column", sm: "row" }}
+                      align={"start"}
+                      justify={"space-between"}
+                    >
+                      <Link
+                        color={"blue.400"}
+                        onClick={() => setShowLoginForm(false)}
+                      >
+                        Don't have an account? Register here
+                      </Link>
+                    </Stack>
+                    <Button
+                      type="submit"
+                      bg={"blue.400"}
+                      color={"white"}
+                      _hover={{
+                        bg: "blue.500",
+                      }}
+                    >
+                      Sign in
+                    </Button>
+                  </Stack>
+                </form>
+              </Stack>
+            </Box>
+          </Stack>
+        </Flex>
+      ) : (
+        <RegisterForm
+          showLoginForm={showLoginForm}
+          setShowLoginForm={setShowLoginForm}
+        />
+      )}
     </div>
   )
 }

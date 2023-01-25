@@ -16,6 +16,7 @@ import {
   ModalCloseButton,
   Text,
   ButtonGroup,
+  Textarea,
 } from "@chakra-ui/react"
 
 const UpdateForm = ({
@@ -97,7 +98,7 @@ const UpdateForm = ({
                   onChange={handleTitleChange}
                   placeholder="Title *"
                 />
-                <Input
+                <Textarea
                   value={todoDescription}
                   onChange={handleDescriptionChange}
                   placeholder="Description"

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import audio from "../assets/alarm_sound.mp3"
-import { Divider, Button, ButtonGroup, Text, Box } from "@chakra-ui/react"
+import { Divider, Button, ButtonGroup, Text, Box, Flex } from "@chakra-ui/react"
 
 const Timer = () => {
   const [timeLeft, setTimeLeft] = useState(25 * 60)
@@ -53,8 +53,8 @@ const Timer = () => {
   }
 
   return (
-    <div>
-      <Box mt={6}>
+    <Flex justify="center">
+      <Box mt={8}>
         <Text fontSize="lg" as="b" color="#2B6CB0">
           Timer
         </Text>
@@ -88,7 +88,7 @@ const Timer = () => {
         </ButtonGroup>
         <Divider />
       </Box>
-    </div>
+    </Flex>
   )
 }
 

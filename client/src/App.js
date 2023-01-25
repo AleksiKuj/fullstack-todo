@@ -67,7 +67,11 @@ function App() {
           user={user}
           setMessage={setMessage}
           setMessageType={setMessageType}
-        />
+        >
+          <Button onClick={() => logOut()} my={2}>
+            Log out
+          </Button>
+        </TodosList>
         <Togglable buttonLabel="Create new todo">
           <TodoForm
             todos={todos}
@@ -77,9 +81,6 @@ function App() {
           />
         </Togglable>
         <Timer />
-        <Button onClick={() => logOut()} my={2}>
-          Log out
-        </Button>
       </Container>
       <Footer />
     </div>

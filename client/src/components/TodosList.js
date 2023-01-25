@@ -15,10 +15,28 @@ import {
   TabPanels,
   Tab,
   TabPanel,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverBody,
+  PopoverFooter,
+  PopoverArrow,
+  PopoverCloseButton,
+  PopoverAnchor,
+  Button,
+  Portal,
 } from "@chakra-ui/react"
 import { DeleteIcon, SettingsIcon } from "@chakra-ui/icons"
 
-const TodosList = ({ todos, setTodos, user, setMessage, setMessageType }) => {
+const TodosList = ({
+  todos,
+  setTodos,
+  user,
+  setMessage,
+  setMessageType,
+  children,
+}) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [activeTodo, setActiveTodo] = useState(undefined)
   const [activeTodoTitle, setActiveTodoTitle] = useState("")
@@ -70,34 +88,56 @@ const TodosList = ({ todos, setTodos, user, setMessage, setMessageType }) => {
       return "purple"
     }
   }
-  const x = (todo) => {
+  const setTodoForUpdate = (todo) => {
     setActiveTodo(todo)
     setActiveTodoTitle(todo.title)
     setActiveTodoDescription(todo.description)
     onOpen()
   }
 
+  const popover = (todo) => {
+    return (
+      <Popover isLazy>
+        <PopoverTrigger>
+          <IconButton
+            // onClick={() => handleDelete(todo)}
+            aria-label="Delete todo"
+            colorScheme="red"
+            variant="ghost"
+            icon={<DeleteIcon />}
+          />
+        </PopoverTrigger>
+        <Portal>
+          <PopoverContent>
+            <PopoverArrow />
+            <PopoverHeader>Delete item?</PopoverHeader>
+            <PopoverCloseButton />
+            <PopoverBody>
+              <Button colorScheme="red" onClick={() => handleDelete(todo)}>
+                Delete
+              </Button>
+            </PopoverBody>
+            <PopoverFooter>This action cannot be undone!</PopoverFooter>
+          </PopoverContent>
+        </Portal>
+      </Popover>
+    )
+  }
+
   const todosSortedByPriority = (priority) => {
     return (
       <UnorderedList styleType="none" mb={5}>
         {usersTodos()
-          // .filter((todo) => todo.priority === priority)
           .filter((todo) => (priority ? todo.priority === priority : todo))
           .map((todo) => (
             <ListItem key={todo.id}>
               <Stack>
                 <Text overflow="hidden" fontSize="lg">
                   {todo.title}
+                  {popover(todo)}
                   <IconButton
-                    onClick={() => handleDelete(todo)}
-                    aria-label="Delete todo"
-                    colorScheme="red"
-                    variant="ghost"
-                    icon={<DeleteIcon />}
-                  />
-                  <IconButton
-                    onClick={() => x(todo)}
-                    aria-label="Delete todo"
+                    onClick={() => setTodoForUpdate(todo)}
+                    aria-label="Update todo"
                     colorScheme="black"
                     variant="ghost"
                     icon={<SettingsIcon />}
@@ -124,7 +164,8 @@ const TodosList = ({ todos, setTodos, user, setMessage, setMessageType }) => {
   return (
     <div>
       <Heading as="h2" size="lg" my="1rem" color="#2B6CB0">
-        {user.username}'s todolist
+        {user.username}'s todolist{" "}
+        <span style={{ float: "right" }}>{children}</span>
       </Heading>
       <Divider />
       <Tabs isLazy variant="line">
