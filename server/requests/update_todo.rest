@@ -1,8 +1,8 @@
-PATCH http://localhost:3001/api/todos/63cfd1242e5a7e3de6888910
+PATCH http://localhost:3001/api/todos/X
 Content-Type:application/json
 
 {
-    "title":"gfd",
-    "description":"desc",
-    "priority":2
+    "title":"",
+    "description":"",
+    "priority":1
 }

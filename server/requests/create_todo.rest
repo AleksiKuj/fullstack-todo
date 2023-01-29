@@ -1,6 +1,6 @@
 POST http://localhost:3001/api/todos
 Content-Type:application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpZCI6IjYzY2ZlOWM2Y2E0NjRhYTVkN2QyNTI2ZSIsImlhdCI6MTY3NDU3MjcyNywiZXhwIjoxNjc0NTc2MzI3fQ.O1gZegerbgjALlMU-Xckxn2scfoVLfNx9XpqjOPKvcw
+Authorization: bearer X
 
 {
     "title":"priority test",
